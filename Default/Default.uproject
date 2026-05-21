@@ -16,10 +16,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "OpenXRInput",
-			"Enabled": true
-		},
-		{
 			"Name": "EnhancedInput",
 			"Enabled": true
 		},
