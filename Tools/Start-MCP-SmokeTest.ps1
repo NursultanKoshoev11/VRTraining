@@ -16,6 +16,7 @@ New-Item -ItemType Directory -Force -Path $SmokeDir | Out-Null
 
 $smokeCode = @'
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 
 mcp = FastMCP("VRTraining MCP Smoke Test", json_response=True)
 
@@ -30,7 +31,10 @@ def unreal_status() -> str:
     return "MCP connector is reachable. Unreal tools are not loaded in this smoke test."
 
 if __name__ == "__main__":
-    mcp.run(transport="streamable-http")
+    # Cloudflare Quick Tunnel changes the public Host header to *.trycloudflare.com.
+    # Disable DNS rebinding validation for this local development tunnel.
+    security = TransportSecuritySettings(enable_dns_rebinding_protection=False)
+    mcp.run(transport="streamable-http", transport_security=security)
 '@
 
 Set-Content -Path $SmokeFile -Value $smokeCode -Encoding UTF8
