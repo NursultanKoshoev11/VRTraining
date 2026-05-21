@@ -1,0 +1,11 @@
+# Local tools downloaded by setup scripts
+.tools/
+
+# Unreal generated folders
+Default/Binaries/
+Default/DerivedDataCache/
+Default/Intermediate/
+Default/Saved/
+
+# Build outputs
+Builds/
