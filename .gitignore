@@ -1,0 +1,44 @@
+# Unreal Engine generated folders
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+.vs/
+.vscode/
+.idea/
+
+# Build outputs
+*.apk
+*.aab
+*.ipa
+*.app
+*.exe
+*.dll
+*.pdb
+*.so
+*.dylib
+
+# User-specific Unreal files
+*.suo
+*.user
+*.userprefs
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Secrets and local config
+.env
+.env.*
+Config/Secrets.ini
+Config/Local*.ini
+
+# OS files
+.DS_Store
+Thumbs.db
