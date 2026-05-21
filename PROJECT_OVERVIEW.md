@@ -1,255 +1,280 @@
-# VRTraining — BuildSafe VR Client Project Overview
+# VRTraining — Production Project Documentation
 
 ## 1. Project Summary
 
-**VRTraining** is the Unreal Engine client application for a VR construction safety training product. The goal of this project is to create a realistic, practical, and measurable VR simulator where construction workers can learn how to recognize hazards, make safe decisions, complete training scenarios, and send training results to the backend server.
+**VRTraining** is the production Unreal Engine VR client for **BuildSafe VR**, a B2B construction safety training platform. The application is designed for real training operations, not for a prototype-only or experimental demo. The goal is to deliver a stable, measurable, secure, and repeatable VR training experience that can be used by construction companies, safety training centers, vocational schools, community colleges, and apprenticeship programs.
 
-This repository contains the **VR client side** of the product. The client will run on VR devices such as Meta Quest and, later, PC VR headsets. The client is responsible for the immersive training experience: the construction site environment, player interactions, safety tasks, scenario flow, scoring, local event collection, offline storage, and synchronization with the backend server.
+The VR client runs the immersive training experience. It places a trainee inside a realistic construction environment, gives the trainee safety tasks, records important training actions, calculates local results, stores data safely if the device is offline, and synchronizes the completed training session with the backend server.
 
-The product should not be treated as a simple VR game. It is a **B2B training tool** for construction companies, safety training centers, vocational schools, community colleges, and apprenticeship programs. The main value is not only that the user can walk around a virtual construction site, but that the system can measure what the trainee did, what hazards they found, what mistakes they made, and whether they are ready for the next training step.
+This client must be developed with production expectations from the beginning:
 
----
+- stable VR performance;
+- reliable session tracking;
+- secure server communication;
+- offline-safe data storage;
+- clear user experience;
+- multilingual training content;
+- versioned training modules;
+- audit-friendly training results;
+- maintainable Unreal architecture;
+- release-ready Quest builds.
 
-## 2. Product Vision
-
-The vision is to build a VR training platform that helps construction teams train workers before they enter a real jobsite. In a real construction environment, mistakes can be expensive and dangerous. In VR, the trainee can make mistakes safely, receive instant feedback, repeat scenarios, and improve hazard recognition skills.
-
-The first version should focus on **construction safety hazard recognition**. The trainee will enter a virtual jobsite, inspect equipment, identify dangerous conditions, choose correct safety actions, and complete scenario checklists.
-
-The long-term vision is to turn this into a modular platform where new training modules can be added over time:
-
-- PPE and site entry training
-- Fall hazard recognition
-- Scaffold safety awareness
-- Trench and excavation awareness
-- Electrical hazard awareness
-- Struck-by hazard awareness
-- Caught-in/between hazard awareness
-- Equipment blind spot awareness
-- Emergency evacuation practice
-- Custom training scenes based on a client jobsite
+The application is not positioned as an official certification product. It is positioned as **supplemental VR safety training** and **OSHA-aligned hazard recognition practice**. The product supports training and documentation, but it must not claim to replace official employer-required training, OSHA-authorized courses, or legal safety obligations.
 
 ---
 
-## 3. Important Positioning Note
+## 2. Production Product Vision
 
-This product should be described as **supplemental VR safety training** or **OSHA-aligned hazard recognition practice**.
+The production vision is to build a VR safety training client that companies can use repeatedly with real workers or students. The product must help trainees practice safety decisions before they face similar risks on a real jobsite.
 
-It should not be described as:
+A production training session must answer three questions:
 
-- official OSHA certification
-- OSHA-approved training
-- replacement for OSHA 10 or OSHA 30
-- replacement for employer-required job-specific training
-- guarantee that accidents will not happen
+1. Did the trainee understand the task?
+2. Did the trainee recognize the hazards?
+3. Can the safety manager review clear evidence of the trainee’s performance?
 
-The VR application is intended to support training, practice, documentation, and readiness checks. Any formal safety compliance requirements must be reviewed with qualified safety professionals and legal/compliance advisors before the product is sold as part of a formal training program.
+The VR client must create the training experience, but the result must be measurable. Every completed session must produce structured data that can be sent to the backend and displayed in reports.
 
----
-
-## 4. Role of This Repository
-
-This repository is for the **Unreal Engine VR client**.
-
-The VR client will be responsible for:
-
-1. Rendering the virtual construction site.
-2. Providing realistic VR interaction.
-3. Running training scenarios.
-4. Tracking user actions inside each scenario.
-5. Calculating local score and progress.
-6. Showing feedback to the trainee.
-7. Saving training data locally if internet is unavailable.
-8. Sending training results to the backend server.
-9. Supporting multiple training modules.
-10. Supporting future localization, for example English and Spanish.
-
-The VR client should stay focused on training simulation and user experience. Long-term storage, reporting, company management, user management, and analytics belong to the server repository.
+The long-term product direction is a modular VR training platform where each module is versioned, measurable, localizable, and connected to the server-side reporting system.
 
 ---
 
-## 5. Target Platforms
+## 3. Production Positioning Rules
 
-### 5.1 Primary Platform
+The application can be described as:
 
-The primary target platform should be:
+- supplemental construction safety training;
+- VR hazard recognition training;
+- OSHA-aligned safety awareness practice;
+- Focus Four hazard awareness training support;
+- supervisor-ready VR training data collection;
+- repeatable VR safety training scenario system.
+
+The application must not be described as:
+
+- official OSHA certification;
+- OSHA-approved certification;
+- replacement for OSHA 10 or OSHA 30;
+- replacement for employer-specific training;
+- legal proof of full compliance by itself;
+- guarantee that accidents will not happen.
+
+This wording matters because the product will be sold to real organizations. Incorrect safety or certification claims can create legal and business risk.
+
+---
+
+## 4. Role of the VR Client
+
+This repository contains only the Unreal Engine VR client. The VR client is responsible for the interactive training experience and the client-side session lifecycle.
+
+The VR client must handle:
+
+1. VR device startup and runtime configuration.
+2. User login, PIN entry, or QR-based session access.
+3. Language selection.
+4. Training module selection.
+5. Construction site environment rendering.
+6. VR movement and interaction.
+7. Scenario objective flow.
+8. Hazard detection and trainee action tracking.
+9. PPE selection and inspection logic.
+10. Local scoring and immediate feedback.
+11. Local session persistence.
+12. Offline queue for unsent training data.
+13. Secure HTTPS communication with the backend.
+14. Sync status and retry handling.
+15. Production build packaging for target devices.
+
+The VR client must not directly access the database. It must communicate only through backend API endpoints.
+
+---
+
+## 5. Target Production Platforms
+
+## 5.1 Primary Platform
+
+Primary production target:
 
 - Meta Quest 3
-- Meta Quest 3S, if performance allows
+- Meta Quest 3S if performance testing confirms stable quality
 
-The reason is simple: standalone headsets are easier for training centers and construction companies. A client does not need a powerful gaming PC for every headset.
+Standalone Quest support is important because training centers and construction companies need a practical setup. A standalone headset is easier to deploy than a PC VR setup.
 
-### 5.2 Secondary Platform
+## 5.2 Secondary Platform
 
-Secondary platform:
+Secondary target:
 
 - PC VR through OpenXR
 
-This can be useful for demos, higher quality visuals, development testing, trade shows, and customers who already have PC VR hardware.
+PC VR can be used for high-quality presentations, internal testing, content review, and customers who already operate PC VR labs.
 
-### 5.3 Engine Direction
+## 5.3 Runtime Direction
 
-Recommended engine direction:
+Production runtime direction:
 
-- Unreal Engine 5.6 or the current stable Unreal version used by the team
-- OpenXR as the main VR runtime
-- Android ASTC build for Quest
-- scalable graphics settings
-- optimized assets for standalone VR
-
----
-
-## 6. Core User Flow
-
-The basic trainee flow should be:
-
-1. The trainee puts on the VR headset.
-2. The trainee selects language.
-3. The trainee logs in or enters a training PIN/QR code.
-4. The application downloads or loads assigned training modules.
-5. The trainee selects a module.
-6. The tutorial explains movement, interaction, and objective.
-7. The trainee enters the VR construction scenario.
-8. The trainee identifies hazards and performs required actions.
-9. The application records training events.
-10. The trainee finishes the scenario.
-11. The application shows score, feedback, and missed hazards.
-12. The result is saved locally and sent to the server.
-13. The safety manager can later see the result in the web dashboard.
+- Unreal Engine 5.6 or the approved production engine version;
+- OpenXR as the main VR runtime;
+- Android ASTC packaging for Quest;
+- production signing configuration;
+- versioned releases;
+- device-tested builds, not editor-only validation;
+- scalable quality settings.
 
 ---
 
-## 7. MVP Scope
+## 6. Production Training Package
 
-The first MVP should be small, focused, and sellable. The MVP should not try to simulate every possible construction situation. The first goal is to prove that the product can deliver a valuable VR training session and a useful report.
+The initial production release should contain a focused but complete training package. It should not be described as a temporary prototype. It should be a real first commercial package that can be shown, tested, and sold to early customers.
 
-### MVP Name
+Initial production package name:
 
-**BuildSafe VR — Focus Four Starter Pack**
+**BuildSafe VR — Construction Hazard Recognition Package**
 
-### MVP Modules
-
-The first version should include three VR modules:
+Initial production modules:
 
 1. **PPE & Site Entry Check**
 2. **Work at Height / Fall Hazard Recognition**
 3. **Construction Site Hazard Hunt**
 
-### MVP Technical Features
+These three modules are enough to create a complete production workflow:
 
-The VR client MVP should include:
+- trainee enters the system;
+- trainee selects or receives assigned training;
+- trainee completes realistic tasks;
+- trainee receives feedback;
+- result is synced to server;
+- manager receives report.
 
-- VR locomotion or guided teleport movement
-- hand interaction
-- object selection
-- hazard marking system
-- scenario objectives
-- scoring system
-- local event tracking
-- end-of-session feedback screen
-- backend sync
-- offline queue for unsent results
-- basic language support structure
+---
+
+## 7. Production User Flow
+
+A production training session should work as follows:
+
+1. The trainer prepares the headset.
+2. The trainee puts on the VR headset.
+3. The application opens in a clean kiosk-style training mode.
+4. The trainee selects language.
+5. The trainee logs in, enters a training PIN, or scans a QR code.
+6. The application validates access with the backend or uses an approved offline assignment.
+7. The assigned training module appears.
+8. The trainee starts the module.
+9. The tutorial explains controls, objectives, and safety interaction rules.
+10. The trainee completes the training scenario.
+11. The application records important events.
+12. The application calculates score and shows feedback.
+13. The session is saved locally.
+14. The session is uploaded to the backend.
+15. If upload fails, the session remains in the offline queue.
+16. The trainer or safety manager can later review the result in the dashboard.
+
+The flow must be simple enough for a first-time VR user.
 
 ---
 
 ## 8. Module 1 — PPE & Site Entry Check
 
-### Purpose
+## 8.1 Purpose
 
-This module teaches and tests whether the trainee understands basic site entry safety behavior. Before entering a construction site, the trainee must choose correct PPE, inspect it, understand warning signs, and enter through a safe path.
+This module verifies whether the trainee understands basic site entry preparation. Before entering a construction site, the trainee must select required PPE, inspect equipment condition, read warning signs, and enter through the correct safe path.
 
-### Scene Description
+## 8.2 Production Scene Requirements
 
-The trainee starts near the entrance of a construction site. In front of the trainee there is a small preparation area with safety equipment and signs.
+The scene should include:
 
-Objects in the scene:
+- jobsite entry gate;
+- PPE preparation table;
+- hard hat;
+- safety glasses;
+- gloves;
+- high-visibility vest;
+- safety boots;
+- harness;
+- damaged harness option;
+- damaged helmet option if needed;
+- warning signs;
+- restricted area sign;
+- toolbox talk board;
+- safe entry route;
+- blocked or unsafe entry route.
 
-- hard hat
-- safety glasses
-- gloves
-- high-visibility vest
-- safety boots
-- harness
-- damaged harness option
-- warning signs
-- restricted area sign
-- toolbox talk board
-- safe entry gate
-- unsafe entry path
+## 8.3 Required Trainee Actions
 
-### Required Trainee Actions
+The trainee must:
 
-The trainee should:
+1. Select correct PPE.
+2. Inspect PPE condition.
+3. Reject damaged PPE.
+4. Read or acknowledge required signs.
+5. Avoid restricted areas.
+6. Enter through the correct route.
+7. Confirm readiness to begin work.
 
-1. Select required PPE.
-2. Inspect whether the PPE is damaged.
-3. Reject damaged equipment.
-4. Read warning signs.
-5. Choose the correct site entry path.
-6. Confirm readiness to begin work.
+## 8.4 Tracked Events
 
-### Events to Track
+The client should record:
 
-The client should track events such as:
-
+- `module_started`
 - `ppe_selected`
-- `ppe_missing`
+- `required_ppe_missing`
 - `damaged_ppe_selected`
+- `damaged_ppe_rejected`
 - `warning_sign_checked`
 - `restricted_area_entered`
 - `safe_entry_completed`
+- `feedback_shown`
 - `module_completed`
 
-### Feedback Examples
+## 8.5 Feedback Rules
 
-If the trainee selects a damaged harness, the application should explain that damaged fall protection equipment must not be used.
+Feedback must be direct, clear, and professional. It should explain what happened, why it matters, and what the trainee should do differently.
 
-If the trainee enters the restricted area, the scenario should pause and explain why that path is unsafe.
+Example:
 
-The feedback should be direct, calm, and professional. It should teach the trainee without making the training feel like a punishment.
+> You selected a damaged harness. Damaged fall protection equipment must not be used. Choose approved equipment in good condition before working at height.
+
+No graphic accident visuals should be used.
 
 ---
 
 ## 9. Module 2 — Work at Height / Fall Hazard Recognition
 
-### Purpose
+## 9.1 Purpose
 
-This module teaches the trainee to identify fall hazards and unsafe working conditions at height.
+This module trains the trainee to identify fall hazards, unsafe ladder conditions, missing guardrails, unsafe edges, and fall protection requirements.
 
-### Scene Description
+## 9.2 Production Scene Requirements
 
-The trainee is placed in a jobsite area with scaffolding, ladders, open edges, guardrails, anchor points, and workers performing tasks.
+The scene should include:
 
-Objects and areas:
+- scaffold platform;
+- ladder;
+- open edge;
+- correct guardrail;
+- missing guardrail;
+- anchor point;
+- harness equipment;
+- toe board;
+- falling object risk area;
+- NPC worker with unsafe behavior;
+- unsafe ladder angle;
+- clearly marked work zones.
 
-- scaffold platform
-- ladder
-- open edge
-- guardrail
-- missing guardrail
-- anchor point
-- harness
-- toe board
-- falling object zone
-- worker without correct PPE
-- unsafe ladder angle
+## 9.3 Required Trainee Actions
 
-### Required Trainee Actions
+The trainee must:
 
-The trainee should:
-
-1. Identify missing guardrails.
-2. Identify unsafe open edges.
+1. Identify open-edge hazards.
+2. Identify missing guardrails.
 3. Check ladder placement.
 4. Identify where fall protection is required.
-5. Select correct safety equipment.
-6. Mark unsafe behavior by NPC workers.
-7. Complete a safety checklist before work begins.
+5. Select or confirm correct fall protection equipment.
+6. Report unsafe NPC behavior.
+7. Complete the scenario checklist.
 
-### Events to Track
+## 9.4 Tracked Events
 
-The client should track:
+The client should record:
 
 - `hazard_found`
 - `hazard_missed`
@@ -259,508 +284,524 @@ The client should track:
 - `anchor_point_checked`
 - `worker_hazard_reported`
 - `checklist_completed`
+- `critical_error_triggered`
+- `module_completed`
 
-### UX Rule
+## 9.5 Safety UX Rule
 
-The module should not show graphic injuries or frightening accident visuals. If the trainee makes a critical mistake, the scene can stop, fade, or show a warning panel. The focus should be professional training, not shock value.
+If the trainee makes a critical mistake, the application should stop the unsafe action, fade or pause the scene, and show an explanation. The experience should teach, not scare.
 
 ---
 
 ## 10. Module 3 — Construction Site Hazard Hunt
 
-### Purpose
+## 10.1 Purpose
 
-This module tests general hazard recognition across a construction site. The trainee must walk through the scene and identify as many hazards as possible within a time limit or objective list.
+This module tests general hazard recognition across a realistic construction site. The trainee must inspect multiple zones and identify hazards within the scenario rules.
 
-### Scene Description
+## 10.2 Production Scene Zones
 
-The site should include multiple zones:
+The scene should include:
 
-- material storage area
-- pedestrian path
-- electrical area
-- trench area
-- scaffold area
-- moving equipment area
-- loading zone
+- pedestrian route;
+- material storage area;
+- electrical area;
+- trench or excavation area;
+- scaffold area;
+- equipment movement area;
+- loading zone;
+- emergency path.
 
-### Example Hazards
+## 10.3 Example Hazards
 
 The trainee may need to identify:
 
-- cable across walkway
-- open trench without barrier
-- improperly stacked materials
-- worker without high-visibility vest
-- moving equipment without spotter
-- wet/slippery floor
-- open electrical panel
-- unsecured ladder
-- falling object risk
-- blocked emergency path
-- missing warning sign
-- poor housekeeping area
+- cable across walkway;
+- open trench without barrier;
+- improperly stacked materials;
+- worker without high-visibility vest;
+- moving equipment without spotter;
+- wet or slippery floor;
+- open electrical panel;
+- unsecured ladder;
+- falling object risk;
+- blocked emergency path;
+- missing warning sign;
+- poor housekeeping area.
 
-### Events to Track
+## 10.4 Tracked Events
 
-The client should track:
+For each hazard, the application should track:
 
-- hazard ID
-- hazard category
-- severity
-- whether the trainee found it
-- time when it was found
-- whether the trainee used a hint
-- whether the trainee clicked the wrong object
-- whether the trainee entered an unsafe area
+- hazard ID;
+- hazard category;
+- severity;
+- whether the trainee found it;
+- time found;
+- whether a hint was used;
+- wrong object selections;
+- unsafe zone entry;
+- final hazard status.
 
-### End Result
+## 10.5 Completion Result
 
-At the end of the module, the trainee should see:
+At the end, the trainee should see:
 
-- total score
-- hazards found
-- hazards missed
-- critical hazards missed
-- unsafe actions
-- time used
-- recommendation to repeat or proceed
-
----
-
-## 11. Scenario System Design
-
-The training modules should be data-driven as much as possible. This means a developer should be able to create new hazards and scenario steps without hardcoding every rule in C++.
-
-Recommended approach:
-
-- Unreal Data Assets for module definitions
-- Data Assets or JSON for hazard definitions
-- Blueprint-friendly components for designers
-- C++ base classes for core logic
-- clear separation between scenario logic and visual content
-
-### Example Scenario Data
-
-Each scenario can define:
-
-- module ID
-- module title
-- objective list
-- required hazards
-- optional hazards
-- fail conditions
-- pass threshold
-- time limit
-- feedback messages
-- backend module code
-
-### Example Hazard Data
-
-Each hazard should have:
-
-- hazard code
-- hazard category
-- severity
-- correct action type
-- feedback text
-- score penalty
-- whether it is critical
-- localization key
+- final score;
+- pass/fail result;
+- hazards found;
+- hazards missed;
+- critical hazards missed;
+- unsafe actions;
+- time used;
+- recommendation.
 
 ---
 
-## 12. Recommended Unreal Architecture
+## 11. Production Scenario System
 
-### 12.1 Core Classes and Systems
+The scenario system must be data-driven and maintainable. A developer or technical designer should be able to add new hazards, scoring rules, and feedback without rewriting core systems every time.
 
-The project should eventually include these systems:
+Recommended structure:
 
-#### `UTrainingSessionSubsystem`
+- C++ base systems for stability;
+- Blueprint-friendly components for content setup;
+- Unreal Data Assets for module definitions;
+- Unreal Data Assets or JSON for hazard definitions;
+- localization keys for all user-facing text;
+- versioned module codes;
+- server-compatible identifiers.
+
+## 11.1 Module Definition
+
+Each module should define:
+
+- module code;
+- module title;
+- module version;
+- supported languages;
+- objective list;
+- required hazards;
+- optional hazards;
+- critical fail conditions;
+- pass threshold;
+- scoring rules;
+- feedback messages;
+- backend mapping code.
+
+## 11.2 Hazard Definition
+
+Each hazard should define:
+
+- hazard code;
+- hazard title;
+- hazard category;
+- severity;
+- correct action type;
+- feedback localization key;
+- score penalty;
+- whether it is critical;
+- analytics category;
+- backend event code.
+
+---
+
+## 12. Production Unreal Architecture
+
+## 12.1 Required Systems
+
+### `UTrainingSessionSubsystem`
 
 Responsible for:
 
-- starting a training session
-- ending a training session
-- keeping current session state
-- collecting training events
-- calculating basic score
-- sending final result to sync system
+- starting a training session;
+- ending a training session;
+- storing current session state;
+- collecting event records;
+- calculating local score;
+- preparing data for server sync;
+- preventing data loss during level transition or app pause.
 
-#### `UScenarioManagerComponent`
-
-Responsible for:
-
-- loading a module
-- starting scenario stages
-- checking objectives
-- controlling scenario progression
-- triggering final result screen
-
-#### `UHazardInteractionComponent`
-
-Attached to interactive hazard objects.
+### `UScenarioManagerComponent`
 
 Responsible for:
 
-- storing hazard ID
-- storing hazard severity
-- handling player selection
-- checking if the action is correct
-- sending event to training session system
-- showing feedback
+- loading the selected module;
+- starting scenario stages;
+- tracking objectives;
+- validating completion;
+- triggering feedback;
+- ending the module.
 
-#### `UPPEItemComponent`
+### `UHazardInteractionComponent`
+
+Attached to hazard actors.
+
+Responsible for:
+
+- storing hazard code;
+- storing severity;
+- handling trainee selection;
+- validating correct interaction;
+- sending events to the session subsystem;
+- showing hazard-specific feedback.
+
+### `UPPEItemComponent`
 
 Attached to PPE objects.
 
 Responsible for:
 
-- item type
-- item condition
-- whether it is required
-- whether it is selected
-- whether it is damaged
+- item type;
+- required/optional status;
+- item condition;
+- selected state;
+- damaged state;
+- validation rules.
 
-#### `UReportSyncSubsystem`
-
-Responsible for:
-
-- sending sessions to backend
-- retrying failed requests
-- storing offline results
-- confirming successful upload
-
-#### `UTrainingApiClient`
+### `UTrainingApiClient`
 
 Responsible for:
 
-- HTTP requests to backend
-- authentication token handling
-- session start request
-- event upload request
-- session complete request
-- error handling
+- HTTPS calls to the backend;
+- auth token handling;
+- session start requests;
+- event batch upload;
+- session completion upload;
+- retry-safe request handling;
+- readable API errors.
+
+### `UOfflineSyncSubsystem`
+
+Responsible for:
+
+- local session queue;
+- retry scheduling;
+- sync status;
+- duplicate upload prevention;
+- local persistence until server acknowledgement.
+
+### `ULocalizationManager`
+
+Responsible for:
+
+- language selection;
+- localized text lookup;
+- localized feedback messages;
+- future audio localization support.
 
 ---
 
-## 13. Data Sent to the Server
+## 13. Server Data Contract
 
-The VR client should send useful training data, not unnecessary private tracking data.
+The VR client must send structured training data. It must not send unnecessary private tracking information.
 
-The client should not send continuous head movement, hand movement, or body tracking unless there is a specific training reason and privacy review.
+Do not send continuous head movement, hand movement, or raw body tracking by default. Only send training-relevant events.
 
-### Session Start Data
+## 13.1 Session Start Payload
 
-When a module starts, send:
+The client should send:
 
-- trainee ID or training code
-- device ID
-- module ID
-- app version
-- language
-- timestamp
+- trainee ID or training code;
+- company assignment if available;
+- device ID;
+- module code;
+- module version;
+- app version;
+- language;
+- client timestamp;
+- client session ID for idempotency.
 
-### Training Event Data
+## 13.2 Training Event Payload
 
-During the module, record events like:
+The client should send event batches containing:
 
-- hazard found
-- hazard missed
-- unsafe action
-- PPE selected
-- damaged PPE selected
-- checklist item completed
-- hint used
-- wrong object selected
+- event type;
+- hazard code;
+- category;
+- severity;
+- action;
+- correctness;
+- time offset;
+- metadata if needed.
 
-### Session Completion Data
+## 13.3 Session Completion Payload
 
-At the end, send:
+At completion, the client should send:
 
-- session ID
-- module ID
-- duration
-- final score
-- pass/fail status
-- hazards found
-- hazards missed
-- unsafe actions
-- hints used
-- final event list or event summary
-
----
-
-## 14. Offline Mode
-
-Offline mode is important because a VR headset may be used in a training room with weak Wi-Fi.
-
-The client should behave like this:
-
-1. If internet is available, send data normally.
-2. If internet is unavailable, save session data locally.
-3. Mark the session as `pending_sync`.
-4. Retry upload later.
-5. Do not lose completed training data.
-6. Show simple sync status to the trainer if needed.
-
-Local storage should be structured and safe. Do not store sensitive data unnecessarily.
+- client session ID;
+- server session ID if already received;
+- module code;
+- module version;
+- duration;
+- final score;
+- pass/fail status;
+- hazards found;
+- hazards missed;
+- unsafe actions;
+- hints used;
+- app version;
+- device ID;
+- local completion timestamp.
 
 ---
 
-## 15. Scoring Design
+## 14. Offline Mode Production Requirements
 
-The scoring system should be simple at first.
+Offline mode is mandatory for production because training rooms may have weak or unstable internet.
 
-Example:
+The client must:
 
-- start score: 100
-- missed critical hazard: -15
-- missed medium hazard: -8
-- missed minor hazard: -3
-- unsafe action: -20
-- hint used: -5
-- timeout: -10
+1. Save the session locally before sending to the server.
+2. Keep a pending sync queue.
+3. Retry failed uploads.
+4. Never create duplicate records intentionally.
+5. Keep completed sessions until the server confirms successful sync.
+6. Show clear sync status to trainer/admin screens.
+7. Avoid storing unnecessary personal data locally.
+8. Encrypt or protect local sensitive data when practical for the target platform.
 
-Pass threshold can be 80 by default.
-
-The scoring rules should be configurable per module later.
-
----
-
-## 16. Feedback Design
-
-Feedback is one of the most important parts of the training.
-
-Good feedback should answer:
-
-1. What happened?
-2. Why is it unsafe?
-3. What should the trainee do next time?
-
-Example feedback:
-
-> You selected a damaged harness. Damaged fall protection equipment should not be used. Choose approved equipment in good condition before working at height.
-
-The tone should be professional and educational. Avoid overly dramatic language.
+If the user completes training offline, the result must not be lost.
 
 ---
 
-## 17. UI/UX Requirements
+## 15. Scoring Requirements
 
-The UI should be very simple because VR users may be beginners.
+The scoring system must be deterministic, explainable, and versioned.
 
-Required UI screens:
+Initial scoring model:
 
-1. Language selection
-2. Login / PIN code entry
-3. Module selection
-4. Tutorial screen
-5. Objective checklist
-6. Hazard feedback panel
-7. Pause menu
-8. End-of-session result screen
-9. Sync status screen
+- start score: 100;
+- missed critical hazard: -15;
+- missed medium hazard: -8;
+- missed minor hazard: -3;
+- unsafe action: -20;
+- hint used: -5;
+- timeout: -10.
 
-### Result Screen Should Show
+Default pass threshold: 80.
 
-- score
-- pass/fail
-- hazards found
-- hazards missed
-- unsafe actions
-- time used
-- recommendation
+Production requirement: scoring rules must be associated with a module version. If module content changes, historical reports must still be understandable.
 
 ---
 
-## 18. Localization
+## 16. UI/UX Production Requirements
 
-The application should be prepared for multiple languages from the beginning.
+The interface must be usable by people who may never have used VR before.
 
-Initial language priority:
+Required screens:
+
+1. Startup/loading screen.
+2. Language selection.
+3. Login/PIN/QR access screen.
+4. Device sync status screen.
+5. Module assignment screen.
+6. Tutorial screen.
+7. Objective checklist.
+8. In-world hazard feedback panel.
+9. Pause menu.
+10. End-of-session result screen.
+11. Upload/sync result status.
+12. Device reset/logout screen.
+
+UI rules:
+
+- large readable text;
+- simple interaction zones;
+- clear color contrast;
+- no cluttered menus;
+- no hidden critical actions;
+- all errors must tell the user what to do next.
+
+---
+
+## 17. Localization Requirements
+
+Production language support should be designed from day one.
+
+Initial target languages:
 
 1. English
 2. Spanish
 
-Later possible languages:
+Future languages may include:
 
-- Russian
-- Kyrgyz
-- Arabic
-- French
+- Russian;
+- Kyrgyz;
+- Arabic;
+- French.
 
-All user-facing training text should use localization keys, not hardcoded strings.
-
----
-
-## 19. Performance Requirements
-
-Because the target platform is standalone VR, performance is critical.
-
-The application should target stable VR performance. Practical rules:
-
-- use optimized assets
-- use baked lighting where possible
-- avoid heavy dynamic shadows
-- use LODs
-- use simple collision
-- avoid unnecessary physics simulation
-- reduce transparent materials
-- limit post-processing
-- use texture atlases where possible
-- test on real Quest hardware early
-
-The first MVP should prioritize stable training experience over photorealism.
+All trainee-facing text must use localization keys. Avoid hardcoded strings in Blueprints or C++.
 
 ---
 
-## 20. Art and Environment Direction
+## 18. Performance Requirements
 
-The visual style should be realistic enough for training, but not too expensive to produce.
+Production VR performance is a hard requirement.
 
-Recommended direction:
+Target:
 
-- realistic construction site layout
-- clean readable hazards
-- clear safety signs
-- believable equipment
-- optimized modular assets
-- strong visual contrast for important objects
-- avoid clutter that confuses training objectives
+- stable VR frame rate on supported Quest devices;
+- no major hitches during training actions;
+- fast scene loading where possible;
+- predictable memory use;
+- no editor-only assumptions.
 
-The environment should be built in a modular way so new training zones can be added later.
+Optimization rules:
 
----
+- use optimized assets;
+- use LODs;
+- use baked lighting where practical;
+- avoid heavy dynamic shadows;
+- limit transparent materials;
+- use simple collision;
+- avoid unnecessary runtime physics;
+- use texture atlases where useful;
+- profile on real Quest hardware early and repeatedly.
 
-## 21. Integration With Backend
-
-The VR client communicates with the server through HTTPS API.
-
-Basic integration flow:
-
-1. Client authenticates or uses training code.
-2. Client requests assigned modules if needed.
-3. Client starts a training session.
-4. Client records local events.
-5. Client sends event batch or final event summary.
-6. Client completes the session.
-7. Server stores the result.
-8. Dashboard displays the result.
-
-The client should not directly access the database. All communication must go through the backend API.
+Production builds must be tested on real devices, not only in Unreal Editor.
 
 ---
 
-## 22. Security and Privacy Principles
+## 19. Security and Privacy Requirements
 
-The VR client should follow these principles:
+The VR client must follow these rules:
 
-- collect only data needed for training reports
-- do not collect unnecessary biometric or motion history
-- use HTTPS for server communication
-- do not hardcode production secrets in the project
-- store tokens securely where possible
-- support logout or reset device flow
-- avoid exposing server credentials in Blueprints or config files
-
----
-
-## 23. Development Roadmap
-
-### Phase 1 — Prototype
-
-Goal: prove basic VR interaction and hazard detection.
-
-Tasks:
-
-- create Unreal VR project
-- configure OpenXR
-- set up Quest build pipeline
-- create simple construction test scene
-- implement object selection
-- implement hazard component
-- implement event logging in memory
-- create result screen
-
-### Phase 2 — MVP Training Modules
-
-Goal: create the first playable training experience.
-
-Tasks:
-
-- build PPE module
-- build work-at-height module
-- build hazard hunt module
-- implement scenario manager
-- implement scoring
-- implement feedback UI
-- add tutorial
-
-### Phase 3 — Backend Sync
-
-Goal: send real results to server.
-
-Tasks:
-
-- implement API client
-- start session endpoint integration
-- complete session endpoint integration
-- offline queue
-- retry logic
-- sync status UI
-
-### Phase 4 — Pilot Build
-
-Goal: prepare a demo for real customers.
-
-Tasks:
-
-- optimize for Quest
-- record demo video
-- create sample training flow
-- test with multiple users
-- verify reports in dashboard
-- prepare pilot package
+- use HTTPS for all backend communication;
+- never hardcode production secrets;
+- avoid storing passwords locally;
+- store tokens safely where platform allows;
+- support logout and device reset;
+- collect only training-required data;
+- do not collect unnecessary biometrics;
+- do not send raw motion tracking by default;
+- avoid exposing server URLs, tokens, or private config in public assets;
+- handle API errors without leaking sensitive information.
 
 ---
 
-## 24. Definition of Done for the First Demo
+## 20. Release and Build Requirements
 
-The first demo can be considered ready when:
+Production releases must be versioned and traceable.
 
-1. A trainee can enter VR.
-2. A trainee can complete at least one safety module.
-3. The module records correct and incorrect actions.
-4. The trainee receives score and feedback.
-5. The app sends the result to the server.
-6. The result appears in the dashboard.
-7. A report can be generated from the server side.
-8. The Quest build runs smoothly enough for a demo.
+Every release should have:
 
----
+- app version;
+- build number;
+- target platform;
+- backend API compatibility version;
+- module content version;
+- release notes;
+- known issues;
+- tested device list;
+- signed package where required.
 
-## 25. Long-Term Product Direction
+Recommended branches:
 
-After MVP, the VR client can grow into a complete training platform with:
-
-- more modules
-- client-specific custom sites
-- trainer mode
-- multiplayer instructor observation
-- voice guidance
-- AI assistant for training feedback
-- analytics-driven retraining recommendations
-- downloadable training content packages
-- headset kiosk mode
-- LMS integration through server-side features
+- `main` for stable production-ready code;
+- `develop` for active integration if needed;
+- feature branches for new modules or systems;
+- release tags for shipped builds.
 
 ---
 
-## 26. Final Summary
+## 21. Quality Assurance Requirements
 
-This repository is the foundation of the immersive training experience. The VR app should be clear, reliable, optimized, and measurable. The first goal is not to build the biggest possible simulator. The first goal is to build a focused product that demonstrates real value:
+Before any production release, test:
 
-**A trainee enters a VR construction site, identifies hazards, makes decisions, receives feedback, and sends a measurable result to the backend for supervisor review.**
+1. headset startup;
+2. login/PIN/QR flow;
+3. module loading;
+4. all training objectives;
+5. all critical hazards;
+6. scoring correctness;
+7. feedback messages;
+8. offline completion;
+9. retry sync;
+10. backend upload;
+11. session result visibility in dashboard;
+12. localization text;
+13. app pause/resume;
+14. headset restart after unsynced session;
+15. performance on target hardware.
 
-That is the core of the product.
+A release should not be considered production-ready if a completed training session can be lost.
+
+---
+
+## 22. Production Development Roadmap
+
+## Release 1 — Production Foundation
+
+Goal: create a real end-to-end training product.
+
+Required deliverables:
+
+- Unreal VR project configured for Quest and OpenXR;
+- production-ready project structure;
+- core interaction system;
+- training session subsystem;
+- scenario manager;
+- hazard interaction component;
+- PPE item component;
+- scoring system;
+- offline sync subsystem;
+- backend API client;
+- result screen;
+- first three training modules;
+- Quest production build;
+- backend sync verified.
+
+## Release 2 — Training Operations
+
+Goal: make the product easier to use by trainers.
+
+Deliverables:
+
+- improved headset login flow;
+- trainer/device status screen;
+- stronger offline sync visibility;
+- better module assignment handling;
+- improved localization;
+- production QA checklist automation where possible.
+
+## Release 3 — Customer Customization
+
+Goal: support paid customer-specific training content.
+
+Deliverables:
+
+- custom scenario configuration;
+- client-branded module options;
+- configurable hazards;
+- configurable pass thresholds;
+- support for additional module packs.
+
+---
+
+## 23. Production Acceptance Criteria
+
+The VR client is production-ready when:
+
+1. A trainee can complete assigned training without developer assistance.
+2. The app works on target Quest hardware.
+3. The app records training events correctly.
+4. The app calculates score correctly.
+5. The app saves results locally before upload.
+6. The app syncs completed sessions to the backend.
+7. The app survives internet loss without losing completed results.
+8. The dashboard can display the uploaded session.
+9. The report generated by the server matches the session result.
+10. The release is versioned and tested.
+
+---
+
+## 24. Final Summary
+
+This repository is the production VR client for BuildSafe VR. Its job is to deliver a reliable construction safety training experience in VR and send measurable training results to the backend.
+
+The first commercial direction is clear:
+
+**A trainee enters a VR construction site, completes safety training tasks, identifies hazards, receives professional feedback, and sends a reliable training result to the server for supervisor review and reporting.**
+
+This project must be built from the beginning as a real product: stable, secure, measurable, maintainable, and ready for customer use.
