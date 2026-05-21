@@ -1,0 +1,66 @@
+name: VR Client Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Build target"
+        required: true
+        default: "Win64"
+        type: choice
+        options:
+          - Win64
+          - Android_ASTC
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Package VR client
+    runs-on: [self-hosted, Windows, Unreal]
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate Unreal Engine path
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $ue = "F:/Program Files/Epic Games/UE_5.6"
+          if (!(Test-Path "$ue/Engine/Build/BatchFiles/RunUAT.bat")) {
+            throw "UE_5.6 was not found at $ue. Install Unreal Engine 5.6 or update this workflow path."
+          }
+          Write-Host "Using Unreal Engine: $ue"
+
+      - name: Generate project files
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $ue = "F:/Program Files/Epic Games/UE_5.6"
+          & "$ue/Engine/Build/BatchFiles/Build.bat" -projectfiles -project="$env:GITHUB_WORKSPACE/Default/Default.uproject" -game -rocket -progress
+
+      - name: Package Win64
+        if: github.event.inputs.target == 'Win64'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $ue = "F:/Program Files/Epic Games/UE_5.6"
+          & "$ue/Engine/Build/BatchFiles/RunUAT.bat" BuildCookRun -project="$env:GITHUB_WORKSPACE/Default/Default.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -build -stage -pak -archive -archivedirectory="$env:GITHUB_WORKSPACE/Builds/Win64"
+
+      - name: Package Android ASTC for Quest
+        if: github.event.inputs.target == 'Android_ASTC'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $ue = "F:/Program Files/Epic Games/UE_5.6"
+          & "$ue/Engine/Build/BatchFiles/RunUAT.bat" BuildCookRun -project="$env:GITHUB_WORKSPACE/Default/Default.uproject" -noP4 -platform=Android -clientconfig=Development -cook -build -stage -pak -package -archive -compressed -cookflavor=ASTC -archivedirectory="$env:GITHUB_WORKSPACE/Builds/Android_ASTC"
+
+      - name: Upload packaged build
+        uses: actions/upload-artifact@v4
+        with:
+          name: VRTraining-${{ github.event.inputs.target }}
+          path: Builds
+          if-no-files-found: error
