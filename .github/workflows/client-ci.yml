@@ -24,28 +24,13 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          if (!(Test-Path "Default/Default.uproject")) {
-            throw "Default/Default.uproject was not found. The Unreal project must stay inside the Default folder."
-          }
-          if (!(Test-Path "Default/Source/Default/Default.Build.cs")) {
-            throw "Default/Source/Default/Default.Build.cs was not found."
-          }
-          if (Test-Path "VRTraining.uproject") {
-            throw "Root VRTraining.uproject must not exist. The real project is Default/Default.uproject."
-          }
-          if (Test-Path "Source/VRTraining") {
-            throw "Root Source/VRTraining must not exist. Client code must be inside Default/Source/Default."
-          }
+          if (!(Test-Path "Default/Default.uproject")) { throw "Default/Default.uproject was not found." }
+          if (!(Test-Path "Default/Source/Default/Default.Build.cs")) { throw "Default.Build.cs was not found." }
+          if (Test-Path "VRTraining.uproject") { throw "Root VRTraining.uproject must not exist." }
+          if (Test-Path "Source/VRTraining") { throw "Root Source/VRTraining must not exist." }
           Write-Host "Project layout is valid."
-
-      - name: Show runner tool information
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = "Continue"
           Write-Host "Runner OS: $env:RUNNER_OS"
           Write-Host "Workspace: $env:GITHUB_WORKSPACE"
-          where.exe cl
-          where.exe msbuild
 
       - name: Locate Unreal Engine 5.6
         id: locate_ue
@@ -68,7 +53,6 @@ jobs:
           }
           "found=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           Write-Host "Unreal Engine 5.6 was not found on this GitHub-hosted runner."
-          Write-Host "Hosted runners normally include Visual Studio tools, but not the full Unreal Engine installation."
 
       - name: Generate project files
         if: steps.locate_ue.outputs.found == 'true'
@@ -76,12 +60,7 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           $ue = "${{ steps.locate_ue.outputs.ue_dir }}"
-          & "$ue/Engine/Build/BatchFiles/Build.bat" `
-            -projectfiles `
-            -project="$env:GITHUB_WORKSPACE/Default/Default.uproject" `
-            -game `
-            -rocket `
-            -progress
+          & "$ue/Engine/Build/BatchFiles/Build.bat" -projectfiles -project="$env:GITHUB_WORKSPACE/Default/Default.uproject" -game -rocket -progress
 
       - name: Build Win64 Development package
         if: steps.locate_ue.outputs.found == 'true'
@@ -89,18 +68,7 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           $ue = "${{ steps.locate_ue.outputs.ue_dir }}"
-          & "$ue/Engine/Build/BatchFiles/RunUAT.bat" `
-            BuildCookRun `
-            -project="$env:GITHUB_WORKSPACE/Default/Default.uproject" `
-            -noP4 `
-            -platform=Win64 `
-            -clientconfig=Development `
-            -cook `
-            -build `
-            -stage `
-            -pak `
-            -archive `
-            -archivedirectory="$env:GITHUB_WORKSPACE/Builds/Win64"
+          & "$ue/Engine/Build/BatchFiles/RunUAT.bat" BuildCookRun -project="$env:GITHUB_WORKSPACE/Default/Default.uproject" -noP4 -platform=Win64 -clientconfig=Development -cook -build -stage -pak -archive -archivedirectory="$env:GITHUB_WORKSPACE/Builds/Win64"
 
       - name: Upload Win64 artifact
         if: steps.locate_ue.outputs.found == 'true'
@@ -110,10 +78,9 @@ jobs:
           path: Builds/Win64
           if-no-files-found: error
 
-      - name: Hosted runner build result
+      - name: Hosted runner result
         if: steps.locate_ue.outputs.found != 'true'
         shell: pwsh
         run: |
           Write-Host "Client structure validation passed."
-          Write-Host "Full Unreal build was skipped because Unreal Engine 5.6 is not installed on the GitHub-hosted runner."
-          Write-Host "For a real packaged Unreal build, use a self-hosted Windows runner or a larger runner with a custom image that already contains UE_5.6."
+          Write-Host "Full Unreal build was skipped because Unreal Engine 5.6 is not installed on this runner."
