@@ -1,8 +1,8 @@
 {
 	"FileVersion": 3,
 	"EngineAssociation": "5.6",
-	"Category": "",
-	"Description": "",
+	"Category": "VR Training",
+	"Description": "BuildSafe VR construction safety training client.",
 	"Modules": [
 		{
 			"Name": "Default",
@@ -11,6 +11,22 @@
 		}
 	],
 	"Plugins": [
+		{
+			"Name": "OpenXR",
+			"Enabled": true
+		},
+		{
+			"Name": "OpenXRInput",
+			"Enabled": true
+		},
+		{
+			"Name": "EnhancedInput",
+			"Enabled": true
+		},
+		{
+			"Name": "AndroidFileServer",
+			"Enabled": true
+		},
 		{
 			"Name": "ModelingToolsEditorMode",
 			"Enabled": true,
