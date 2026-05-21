@@ -43,6 +43,10 @@ jobs:
             "F:/Program Files/Epic Games/UE_5.6"
           )
           foreach ($path in $candidates) {
+            if (!(Test-Path $path)) {
+              Write-Host "Path does not exist: $path"
+              continue
+            }
             $uat = Join-Path $path "Engine/Build/BatchFiles/RunUAT.bat"
             if (Test-Path $uat) {
               "ue_dir=$path" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
