@@ -1,0 +1,3 @@
+[submodule ".agents/unreal-engine-skills"]
+	path = .agents/unreal-engine-skills
+	url = https://github.com/quodsoler/unreal-engine-skills.git
